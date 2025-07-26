@@ -8,23 +8,23 @@ ${BROWSER}    chrome
 ${input_nome}    xpath=//input[@type='text' and @placeholder='First Name' and @ng-model='FirstName']
 ${input_apelido}    xpath=//input[@type='text' and @placeholder='Last Name' and @ng-model='LastName']
 ${textarea_endereco}    xpath=//textarea[@ng-model='Adress']
-${input_email}    xpath=//input[@type='email' and @ng-model='EmailAdress'] 
+${input_email}    xpath=//input[@type='email' and @ng-model='EmailAdress']
 ${input_telefone}    xpath=//input[@type='tel' and @ng-model='Phone']
 ${GENERO_MASCULINO}     Male
-${GENERO_FEMININO}      FeMALE
+${GENERO_FEMININO}      FeMale
 ${LABEL_HOBBIES}    xpath://label[@type='checkbox' and contains(text(), 'Hobbies')]
 ${CHECKBOX_HOBBIES}    ${LABEL_HOBBIES}/parent::div//input[@type='checkbox']
 ${div_idioma}    id:msdd
 ${select_skills}    id:Skills
 ${country}    id:countries
-${select_pais}    css=.select2-selection--single
+${select_pais}    xpath=//span[contains(@class, 'select2-selection--single')]
 ${ano}    id:yearbox
 ${mes}    xpath=//select[@ng-model='monthbox']
 ${dia}    id:daybox
 ${input_senha}    id:firstpassword
 ${input_confirmacao_senha}    id:secondpassword
-${CAMINHO_FOTO}    "C:\Users\renat\projects\robotselenium\Resources\logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg"
-${input_foto}    id:imagesrc 
+${CAMINHO_FOTO}    C:/Users/renat/projects/robotselenium/Resources/logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
+${input_foto}    id:imagesrc
 ${Button_submit}    submitbtn
 
 
@@ -64,67 +64,44 @@ Preencher campos
 
 Selecionar gênero
     [Arguments]    ${genero}
-    
-    @{localizadores}    Create List
-    ...    xpath://label[contains(@for, 'gender-radio') and text()='${genero}']
-    ...    xpath://input[@name='radiooptions' and @value='${genero}']
-    
-    ${elemento_encontrado}    Set Variable    ${FALSE}
-    
-    FOR    ${localizador}    IN    @{localizadores}
-        ${status}    ${result}    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${localizador}    timeout=10s
-        Run Keyword If    '${status}' == 'PASS'    Run Keywords
-        ...    Scroll Element Into View    ${localizador}
-        ...    AND    Click Element    ${localizador}
-        ...    AND    Set Local Variable    ${elemento_encontrado}    ${TRUE}
-        ...    AND    Exit For Loop
-    END
+    Click Element    xpath=//input[@name='radiooptions' and @value='${genero}']
 
 
 Selecionar Hobbies
     [Arguments]    ${hobby}
     Click Element    xpath=//input[@type='checkbox' and @value='${hobby}']
 
-   
+
 Selecionar Idioma
     [Arguments]    ${idioma}
-    
-    # Abre o dropdown de idiomas
     Click Element    ${div_idioma}
-    
-    # Seleciona o idioma desejado
-    Click Element    xpath=//a[contains(text(),'${idioma}')]
-    
-    # Verifica se o idioma foi selecionado corretamente
-    Run Keyword If    not Element Should Contain    ${select_skills}    ${idioma}    Fail    O idioma '${idioma}' não foi selecionado corretamente
+    Wait Until Element Is Visible    xpath=//a[text()='${idioma}']    timeout=10s
+    Scroll Element Into View    xpath=//a[text()='${idioma}']
+    Click Element    xpath=//a[text()='${idioma}']
+    Click Element    xpath=//header[@id='header']
+    Sleep    1s
 
 
+*** Keywords ***
 Selecionar País
     [Arguments]    ${pais}
-    
-    # Abre o dropdown de países
-    Click Element    ${select_pais}
-    
-    # Seleciona o país desejado
-    Select From List By Label    ${select_pais}    ${pais}
-    
-    # Verifica se o país foi selecionado corretamente
-    Run Keyword If    not Element Should Contain    ${select_pais}    ${pais}    Fail    O país '${pais}' não foi selecionado corretamente
-
+    Wait Until Element Is Visible    xpath=//span[contains(@class, 'select2-selection--single')]    timeout=10s
+    Click Element    xpath=//span[contains(@class, 'select2-selection--single')]
+    Wait Until Element Is Visible    xpath=//input[contains(@class, 'select2-search__field')]    timeout=5s
+    Input Text    xpath=//input[contains(@class, 'select2-search__field')]    ${pais}
+    Press Keys    xpath=//input[contains(@class, 'select2-search__field')]    ENTER
+    Element Should Contain    xpath=//span[contains(@class, 'select2-selection__rendered')]    ${pais}    O país '${pais}' não foi selecionado corretamente
 
 Selecionar country
     [Arguments]    ${outropais}
-    
-    # Abre o dropdown de países
     Click Element    ${country}
-    
-    # Seleciona o país desejado
     Select From List By Label    ${country}    ${outropais}
-    
-    # Verifica se o país foi selecionado corretamente
-    Run Keyword If    not Element Should Contain    ${country}    ${outropais}    Fail    O país '${outropais}' não foi selecionado corretamente
+    Sleep    1s
+    Element Should Contain    ${country}    ${outropais}    Fail    O país '${outropais}' não foi selecionado corretamente
 
-
+Fechar Anúncio
+    Run Keyword And Ignore Error    Execute JavaScript    document.getElementById('aswift_2')?.remove();
+    Sleep    0.5s
 
 Selecionar Skills
     [Arguments]    ${skill}
@@ -136,29 +113,20 @@ Selecionar Skills
     Select From List By Label    ${select_skills}    ${skill}
     
     # Verifica se a skill foi selecionada corretamente
-    Run Keyword If    not Element Should Contain    ${select_skills}    ${skill}    Fail    A skill '${skill}' não foi selecionada corretamente
-
+    Element Should Contain    ${select_skills}    ${skill}    Fail    A skill '${skill}' não foi selecionada corretamente
 
 
 Preencher Ano de Nascimento
     [Arguments]    ${ano}=1993
-    Clear Element Text    id:yearbox
-    Input Text    id:yearbox    ${ano}
-    Press Keys    id:yearbox    ENTER
-
+    Select From List By Label    id:yearbox    ${ano}
 
 Preencher Mês de Nascimento
     [Arguments]    ${mes}=March
-    Clear Element Text    xpath=//select[@ng-model='monthbox']
-    Input Text    xpath=//select[@ng-model='monthbox']    ${mes}
-    Press Keys    xpath=//select[@ng-model='monthbox']    ENTER
-
+    Select From List By Label    xpath=//select[@ng-model='monthbox']    ${mes}
 
 Preencher Dia de Nascimento
     [Arguments]    ${dia}=15
-    Clear Element Text    id:daybox
-    Input Text    id:daybox    ${dia}
-    Press Keys    id:daybox    ENTER
+    Select From List By Label    id:daybox    ${dia}
 
 
 Selecionar Foto
@@ -170,7 +138,7 @@ Selecionar Foto
     
     # Tenta múltiplas estratégias de upload
     Run Keyword And Ignore Error    Choose File    ${input_foto}    ${caminho_foto}
-    Run Keyword And Ignore Error    Upload Foto Por JavaScript    ${caminho_foto}
+
 
     
 Clicar em submit
@@ -185,8 +153,9 @@ Cenário 1: Preencher Formulário ADS
     Abrir site ADS
     Fechar Pop-up de Cookies
     Preencher campos
-    Selecionar gênero    ${GENERO_FEMININO}
+    Selecionar gênero    FeMale
     Selecionar Hobbies    Movies
+    Fechar Anúncio
     Selecionar Idioma    Italian
     Selecionar Skills    Python
     Selecionar country    Select Country
@@ -194,6 +163,6 @@ Cenário 1: Preencher Formulário ADS
     Preencher Ano de Nascimento
     Preencher Mês de Nascimento
     Preencher Dia de Nascimento
-    Carregar Foto    ${CAMINHO_FOTO}
+    Selecionar Foto    ${CAMINHO_FOTO}
     Clicar em submit
     Fechar site
