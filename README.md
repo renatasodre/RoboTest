@@ -17,8 +17,11 @@ Projeto pessoal de testes automatizados para diversos sítios web, desenvolvido 
 ### Clonar repositório:
 
 ```bash
-git clone https://github.com/renatasodre/robotselenium
-cd robotselenium
+git clone https://github.com/renatasodre/RoboTest.git
+```
+
+```bash
+cd RoboTest.git
 ```
 
 ### ➡️ Preparar ambiente
