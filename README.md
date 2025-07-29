@@ -1,37 +1,51 @@
-🤖 Testes Web Automatizados com Robot Framework 🤖
+# 🤖 Testes Web Automatizados com Robot Framework 🤖
 
-➡️ Descrição
+## ➡️ Descrição
 Projeto pessoal de testes automatizados para diversos sítios web, desenvolvido com Robot Framework e Selenium Library.
 
-➡️ Tecnologias
-Python 3.12
-UV (Python package manager)
-Robot Framework
-Selenium Library
+## ➡️ Tecnologias
+✔️ Python 3.12
 
-➡️ Configuração
+✔️ UV (Python package manager)
 
-Clonar repositório
+✔️ Robot Framework 
 
+✔️ Selenium Library
+
+## ➡️ Configuração
+
+### Clonar repositório:
+
+```bash
 git clone https://github.com/renatasodre/robotselenium
 cd robotselenium
+```
 
-➡️ Preparar ambiente
-
+### ➡️ Preparar ambiente
+```bash
 uv venv
 source .venv/bin/activate  # No Windows: .\.venv\Scripts\activate
+```
 
-➡️ Instalar dependências
-
+### ➡️ Instalar dependências
+```bash
 uv add [dependency]
-Selenium Library: uv add robotframework-seleniumlibrary
+```
 
-➡️ Executar Testes
+Selenium Library: 
+```bash
+uv add robotframework-seleniumlibrary
+```
 
+## ➡️ Executar Testes
+
+```bash
 uv run robot [file]
+```
 
-➡️ Estrutura
+## ➡️ Estrutura
 
+```plaintext
 ROBOTSELENIUM/
 │
 ├── .cadence/
@@ -68,23 +82,24 @@ ROBOTSELENIUM/
 ├── uv.lock
 │
 └── (outros arquivos)
+```
 
-➡️ Observações
+## ➡️ Observações
 
 Gestão de Dependências com UV:
 Este projeto utiliza UV para gestão de dependências, substituindo o tradicional pip e requirements.txt.
 
-Como funciona:
+### Como funciona:
 
-✔️Utilizamos uv.toml ou pyproject.toml para definir dependências
+✔️ Utilizamos uv.toml ou pyproject.toml para definir dependências
 
-✔️Comando uv sync instala/atualiza todas as bibliotecas necessárias
+✔️ Comando uv sync instala/atualiza todas as bibliotecas necessárias
 uv sync [OPTIONS]
 
-✔️Processo mais rápido e eficiente comparado ao pip tradicional
+✔️ Processo mais rápido e eficiente comparado ao pip tradicional
 
-➡️ Nota Pessoal
+## ➡️ Nota Pessoal
 Projeto desenvolvido para aprimorar habilidades de teste automatizado e explorar diferentes sítios web.
 
-🔗 Referência
+## 🔗 Referência
 https://docs.astral.sh/uv/reference/cli/
