@@ -46,46 +46,18 @@ uv add robotframework-seleniumlibrary
 uv run robot [file]
 ```
 
-## ➡️ Estrutura
+## ➡️ Projetos Testados
 
-```plaintext
-ROBOTSELENIUM/
-│
-├── .cadence/
-│   └── configs/
-│
-├── .idea/
-│
-├── .venv/
-│
-├── Resources/
-│
-├── logs/
-│   └── log.html
-│
-├── screenshots/
-│   └── selenium-screenshot-*.png
-│
-├── .python-version
-│
-├── form.robot
-│
-├── main.py
-│
-├── output.xml
-│
-├── pyproject.toml
-│
-├── README.md
-│
-├── report.html
-│
-├── teste1.robot
-│
-├── uv.lock
-│
-└── (outros arquivos)
-```
+✔️  NASA APOD (Astronomy Picture of the Day)
+
+✔️  Automation Demo Site
+
+✔️  Bug Bank
+
+✔️  Practice Form Demo QA
+
+✔️ Orange HRM - Open Source HR Software
+
 
 ## ➡️ Observações
 
