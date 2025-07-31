@@ -5,9 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "requests>=2.32.4",
     "robotframework>=7.3.2",
     "robotframework-kafkalibrary>=0.0.3",
+    "robotframework-requests>=0.9.7",
     "robotframework-robocop>=6.5.0",
     "robotframework-seleniumlibrary>=6.7.1",
 ]
