@@ -58,6 +58,8 @@ uv run robot [file]
 
 ✔️ Orange HRM - Open Source HR Software
 
+✔️ Makeup API
+
 
 ## ➡️ Observações
 
