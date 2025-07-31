@@ -10,6 +10,15 @@ ${BROWSER}      chrome
 ${API_KEY}      1A0YEWnyo5hf9ffAkaKvUbl6z24dXFgiFgXUNqhg
 
 
+*** Test Cases ***
+Cenário 1: Validar API NASA
+    Abrir site NASA
+    Validar Resposta do APOD
+
+Cenário 2: Fechar Navegador
+    Fechar site
+
+
 *** Keywords ***
 Configurar Opções do Navegador
     # Configura opções do Chrome
@@ -48,11 +57,3 @@ Validar Resposta do APOD
 
 Fechar site
     Close Browser
-
-*** Test Cases ***
-Cenário 1: Validar API NASA
-    Abrir site NASA
-    Validar Resposta do APOD
-
-Cenário 2: Fechar Navegador
-    Fechar site

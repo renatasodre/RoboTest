@@ -13,6 +13,22 @@ ${input_comentario}     css:textarea.oxd-textarea.oxd-textarea--active
 ${button_in}            css:button.oxd-button--secondary.orangehrm-left-space
 
 
+*** Test Cases ***
+Cenário 1: Fazer Login no OrangeHRM
+    Abrir Navegador
+    Preencher campos
+    Clicar no Botão de Login
+
+Cenário 2: Registar Comentário de Banco de Horas
+    Clicar no Botão de Registar Tempo de Trabalho
+    Adicionar Comentário de Banco de Horas
+    ...    Banco de Horas - Teste de Registro: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+    Submeter Tempo
+
+Cenário 3: Encerrar Sessão
+    Fechar site
+
+
 *** Keywords ***
 Configurar Opções do Navegador
     [Documentation]    Configura opções do Chrome
@@ -60,18 +76,3 @@ Submeter Tempo
 
 Fechar site
     Close Browser
-
-*** Test Cases ***
-Cenário 1: Fazer Login no OrangeHRM
-    Abrir Navegador
-    Preencher campos
-    Clicar no Botão de Login
-
-Cenário 2: Registar Comentário de Banco de Horas
-    Clicar no Botão de Registar Tempo de Trabalho
-    Adicionar Comentário de Banco de Horas
-    ...    Banco de Horas - Teste de Registro: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
-    Submeter Tempo
-
-Cenário 3: Encerrar Sessão
-    Fechar site

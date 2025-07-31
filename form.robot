@@ -2,6 +2,7 @@
 Library     SeleniumLibrary
 Library     OperatingSystem
 
+
 *** Variables ***
 ${URL}                  https://demoqa.com/automation-practice-form
 ${BROWSER}              chrome
@@ -16,12 +17,31 @@ ${input_niver}          id:dateOfBirthInput
 ${LABEL_HOBBIES}        xpath://label[@id='subjects-label' and contains(text(), 'Hobbies')]
 ${CHECKBOX_HOBBIES}     ${LABEL_HOBBIES}/parent::div//input[@type='checkbox']
 ${input_foto}           id:uploadPicture
-${PROJETO_DIR}      ${EXECDIR}
-${CAMINHO_FOTO}     ${PROJETO_DIR}${/}Resources${/}logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
+${PROJETO_DIR}          ${EXECDIR}
+${CAMINHO_FOTO}         ${PROJETO_DIR}${/}Resources${/}logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
 ${textarea_endereco}    id:currentAddress
 ${DIV_STATE}            xpath://div[contains(text(), 'Select State')]
 ${DIV_CITY}             xpath://div[contains(text(), 'Select City')]
 ${button_submit}        id:submit
+
+
+*** Test Cases ***
+Cenário 1: Preencher formulário
+    Abrir navegador
+    Preencher campos
+    # Selecionar gênero
+    Selecionar Gênero    ${GENERO_FEMININO}
+    Preencher Data Nascimento    # Usa data padrão 15 Mar 1993 ou com data personalizada EX.: 20 Abr 1990
+    # Selecionar hobbies
+    Selecionar Hobbies    Reading    Music
+    # Verificar os hobbies selecionados
+    Verificar Hobbies Selecionados
+    # Carregar foto com tratamento de erro
+    Carregar foto
+    # Selecionar Estado e Cidade - A lista de cidades só é habiltada, após a seleção do Estado
+    Selecionar Estado e Cidade    Haryana    Panipat
+    Clicar em submit
+    Fechar site
 
 
 *** Keywords ***
@@ -42,7 +62,7 @@ Abrir Navegador
     [Documentation]    Abre o navegador na página de formulário
     ${chrome_options}    Configurar Opções do Navegador
     Open Browser    ${URL}    ${BROWSER}    options=${chrome_options}
-    #Maximize Browser Window
+    # Maximize Browser Window
 
 Preencher campos
     Input text    ${input_name}    Renata
@@ -97,7 +117,7 @@ Selecionar Gênero
     Run Keyword And Ignore Error    Radio Button Should Be Set To    gender    ${genero}
 
 Carregar Foto
-    ${CAMINHO_ABSOLUTO}=    Normalize Path    ${CAMINHO_FOTO}
+    ${CAMINHO_ABSOLUTO}    Normalize Path    ${CAMINHO_FOTO}
     Wait Until Element Is Visible    id=uploadPicture    10s
     Choose File    id=uploadPicture    ${CAMINHO_ABSOLUTO}
 
@@ -186,21 +206,3 @@ Clicar em submit
 
 Fechar site
     Close Browser
-
-*** Test Cases ***
-Cenário 1: Preencher formulário
-    Abrir navegador
-    Preencher campos
-    # Selecionar gênero
-    Selecionar Gênero    ${GENERO_FEMININO}
-    Preencher Data Nascimento    # Usa data padrão 15 Mar 1993 ou com data personalizada EX.: 20 Abr 1990
-    # Selecionar hobbies
-    Selecionar Hobbies    Reading    Music
-    # Verificar os hobbies selecionados
-    Verificar Hobbies Selecionados
-    # Carregar foto com tratamento de erro
-    Carregar foto
-    # Selecionar Estado e Cidade - A lista de cidades só é habiltada, após a seleção do Estado
-    Selecionar Estado e Cidade    Haryana    Panipat
-    Clicar em submit
-    Fechar site

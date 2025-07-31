@@ -8,6 +8,19 @@ Library     json
 ${BASE_URL}     https://makeup-api.herokuapp.com
 
 
+*** Test Cases ***
+Cenário 1: Buscar Produtos Da Marca
+    ${marca}=    Set Variable    l'oreal
+    ${produtos}=    Buscar Produtos Da Marca    ${marca}
+    Log To Console    Produtos encontrados: ${produtos}
+    Should Not Be Empty    ${produtos}
+
+Cenário 2: Pesquisar Por Tag
+    ${produtos}=    Buscar Todos Os Produtos
+    ${filtrados}=    Filtrar Produtos Por Tag    ${produtos}    Vegan
+    Validar Existencia De Produtos Filtrados    ${filtrados}
+
+
 *** Keywords ***
 Buscar Produtos Da Marca
     [Arguments]    ${marca}
@@ -41,16 +54,3 @@ Validar Existencia De Produtos Filtrados
     [Arguments]    ${lista_filtrada}
     Should Be True    len(${lista_filtrada}) > 0
     Log Many    @{lista_filtrada}
-
-
-*** Test Cases ***
-Cenário 1: Buscar Produtos Da Marca
-    ${marca}=    Set Variable    l'oreal
-    ${produtos}=    Buscar Produtos Da Marca    ${marca}
-    Log To Console    Produtos encontrados: ${produtos}
-    Should Not Be Empty    ${produtos}
-
-Cenário 2: Pesquisar Por Tag
-    ${produtos}=    Buscar Todos Os Produtos
-    ${filtrados}=    Filtrar Produtos Por Tag    ${produtos}    Vegan
-    Validar Existencia De Produtos Filtrados    ${filtrados}

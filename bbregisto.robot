@@ -15,6 +15,22 @@ ${button_cadastrar}             xpath://button[@type='submit' and contains(text(
 ${opção_voltar_login}           id:btnBackButton
 
 
+*** Test Cases ***
+Cenário 1: Acessar página de registro
+    Abrir Home do Site do BugBank
+    Clicar no Botão Registrar
+
+Cenário 2: Formulário de Registro
+    Preencher campos
+
+Cenário 3: Criar conta com saldo
+    Clicar no botão de saldo    ${TRUE}
+
+Cenário 4: Cadastrar e Voltar para a página Home
+    Clicar no Botão Cadastrar
+    Voltar ao Login
+    Fechar site
+
 
 *** Keywords ***
 Configurar Opções do Navegador
@@ -102,20 +118,3 @@ Voltar ao Login
 
 Fechar site
     Close Browser
-
-
-*** Test Cases ***
-Cenário 1: Acessar página de registro
-    Abrir Home do Site do BugBank
-    Clicar no Botão Registrar
-
-Cenário 2: Formulário de Registro
-    Preencher campos
-
-Cenário 3: Criar conta com saldo
-    Clicar no botão de saldo    ${TRUE}
-
-Cenário 4: Cadastrar e Voltar para a página Home
-    Clicar no Botão Cadastrar
-    Voltar ao Login
-    Fechar site

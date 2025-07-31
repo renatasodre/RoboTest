@@ -24,11 +24,30 @@ ${mes}                          xpath=//select[@ng-model='monthbox']
 ${dia}                          id:daybox
 ${input_senha}                  id:firstpassword
 ${input_confirmacao_senha}      id:secondpassword
-${PROJETO_DIR}      ${EXECDIR}
-${CAMINHO_FOTO}     ${PROJETO_DIR}${/}Resources${/}logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
+${PROJETO_DIR}                  ${EXECDIR}
+${CAMINHO_FOTO}                 ${PROJETO_DIR}${/}Resources${/}logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
 ${input_foto}                   id:imagesrc
 ${Button_submit}                submit
 
+
+*** Test Cases ***
+Cenário 1: Preencher Formulário ADS
+    Abrir site ADS
+    Fechar Pop-up de Cookies
+    Preencher campos
+    Selecionar gênero    FeMale
+    Selecionar Hobbies    Movies
+    Fechar Anúncio
+    Selecionar Idioma    Italian
+    Selecionar Skills    Python
+    Selecionar country    Select Country
+    Selecionar País    Japan
+    Preencher Ano de Nascimento
+    Preencher Mês de Nascimento
+    Preencher Dia de Nascimento
+    Selecionar Foto
+    Clicar em submit
+    Fechar site
 
 
 *** Keywords ***
@@ -139,7 +158,7 @@ Preencher Dia de Nascimento
     Select From List By Label    id:daybox    ${dia}
 
 Selecionar Foto
-    ${CAMINHO_ABSOLUTO}=    Normalize Path    ${CAMINHO_FOTO}
+    ${CAMINHO_ABSOLUTO}    Normalize Path    ${CAMINHO_FOTO}
     Open Browser    https://demoqa.com/automation-practice-form    chrome
     Maximize Browser Window
     Sleep    1s
@@ -147,29 +166,8 @@ Selecionar Foto
     Wait Until Element Is Visible    id=uploadPicture    10s
     Choose File    id=uploadPicture    ${CAMINHO_ABSOLUTO}
 
-
 Clicar em submit
     Click Element    ${Button_submit}
 
 Fechar site
     Close Browser
-
-
-*** Test Cases ***
-Cenário 1: Preencher Formulário ADS
-    Abrir site ADS
-    Fechar Pop-up de Cookies
-    Preencher campos
-    Selecionar gênero    FeMale
-    Selecionar Hobbies    Movies
-    Fechar Anúncio
-    Selecionar Idioma    Italian
-    Selecionar Skills    Python
-    Selecionar country    Select Country
-    Selecionar País    Japan
-    Preencher Ano de Nascimento
-    Preencher Mês de Nascimento
-    Preencher Dia de Nascimento
-    Selecionar Foto
-    Clicar em submit
-    Fechar site
