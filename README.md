@@ -26,8 +26,7 @@ cd RoboTest.git
 
 ### ➡️ Preparar ambiente
 ```bash
-uv venv
-source .venv/bin/activate  # No Windows: .\.venv\Scripts\activate
+uv sync
 ```
 
 ### ➡️ Instalar dependências
@@ -56,24 +55,9 @@ uv run robot [file]
 
 ✔️  Practice Form Demo QA
 
-✔️ Orange HRM - Open Source HR Software
+✔️  Orange HRM - Open Source HR Software
 
-✔️ Makeup API
-
-
-## ➡️ Observações
-
-Gestão de Dependências com UV:
-Este projeto utiliza UV para gestão de dependências, substituindo o tradicional pip e requirements.txt.
-
-### Como funciona:
-
-✔️ Utilizamos uv.toml ou pyproject.toml para definir dependências
-
-✔️ Comando uv sync instala/atualiza todas as bibliotecas necessárias
-uv sync [OPTIONS]
-
-✔️ Processo mais rápido e eficiente comparado ao pip tradicional
+✔️  Makeup API
 
 ## ➡️ Nota Pessoal
 Projeto desenvolvido para aprimorar habilidades de teste automatizado e explorar diferentes sítios web.
