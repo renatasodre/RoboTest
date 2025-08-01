@@ -5,39 +5,43 @@ Library     SeleniumLibrary
 *** Variables ***
 ${URL}                          https://bugbank.netlify.app/#
 ${BROWSER}                      chrome
-${button_registro}              xpath://button[@type='button' and contains(text(), 'Registrar')]
-${input_email}                  id:email
-${input_nome}                   id:name
-${input_senha}                  id:password
-${input_confirmacao_senha}      id:passwordConfirmation
-${label_saldo}                  id:toggleAddBalance
-${button_cadastrar}             xpath://button[@type='submit' and contains(text(), 'Cadastrar')]
-${opção_voltar_login}           id:btnBackButton
+${BUTTON_REGISTRO}              xpath://button[@type='button' and contains(text(), 'Registrar')]
+${INPUT_EMAIL}                  id:email
+${INPUT_NOME}                   id:name
+${INPUT_SENHA}                  id:password
+${INPUT_CONFIRMACAO_SENHA}      id:passwordConfirmation
+${LABEL_SALDO}                  id:toggleAddBalance
+${BUTTON_CADASTRAR}             xpath://button[@type='submit' and contains(text(), 'Cadastrar')]
+${OPÇÃO_VOLTAR_LOGIN}           id:btnBackButton
 
 
 *** Test Cases ***
-Cenário 1: Acessar página de registro
-    Abrir Home do Site do BugBank
-    Clicar no Botão Registrar
+Cenário 1: Acessar Página De Registro
+    [Documentation]    Acessa a página de registro do BugBank
+    Abrir Home Do Site Do BugBank
+    Clicar No Botão Registrar
 
-Cenário 2: Formulário de Registro
-    Preencher campos
+Cenário 2: Formulário De Registro
+    [Documentation]    Preenche o formulário de registro
+    Preencher Campos
 
-Cenário 3: Criar conta com saldo
-    Clicar no botão de saldo    ${TRUE}
+Cenário 3: Criar Conta Com Saldo
+    [Documentation]    Cria uma conta com saldo
+    Clicar No Botão De Saldo    ${TRUE}
 
-Cenário 4: Cadastrar e Voltar para a página Home
-    Clicar no Botão Cadastrar
-    Voltar ao Login
-    Fechar site
+Cenário 4: Cadastrar E Voltar Para A Página Home
+    [Documentation]    Clica no botão de cadastrar e volta para a página home
+    Clicar No Botão Cadastrar
+    Voltar Ao Login
+    Fechar Site
 
 
 *** Keywords ***
-Configurar Opções do Navegador
-    # Configura opções do Chrome
+Configurar Opções Do Navegador
+    [Documentation]    Configura as opções do navegador Chrome
     ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
 
-    # Adiciona argumentos
+    # Adiciona argumentos para o Chrome
     Call Method    ${options}    add_argument    --disable-extensions    # Desabilita extensões
     Call Method    ${options}    add_argument    --disable-popup-blocking    # Desabilita bloqueio de pop-ups
     Call Method    ${options}    add_argument    --disable-notifications    # Desabilita notificações
@@ -46,14 +50,14 @@ Configurar Opções do Navegador
 
     RETURN    ${options}
 
-Abrir Home do Site do BugBank
-    # Abre o navegador na página de home
-    ${chrome_options}    Configurar Opções do Navegador
+Abrir Home Do Site Do BugBank
+    [Documentation]    Abre o navegador na página de home do BugBank
+    ${chrome_options}    Configurar Opções Do Navegador
     Open Browser    ${URL}    ${BROWSER}    options=${chrome_options}
     Maximize Browser Window
 
-Clicar no Botão Registrar
-    # Estratégias múltiplas para clicar no botão
+Clicar No Botão Registrar
+    [Documentation]    Clica no botão de registro
     Wait Until Page Contains Element    ${button_registro}    timeout=30s
 
     # Tenta clicar de diferentes formas
@@ -63,19 +67,19 @@ Clicar no Botão Registrar
     ...    document.querySelector('button[type="button"]:contains("Registrar")').click()
 
 Preencher Campos
-    # Input Text    xpath://input[@placeholder='Informe seu e-mail']    rribeirosodre@gmail.com
-    Input Text    css:.card__register input[name='email']    rribeirosodre@gmail.com
-    Input Text    css:.card__register input[name='name']    Renata Sodré
+    [Documentation]   Preenche os campos do formulário de registro
+    Input Text        css:.card__register input[name='email']    rribeirosodre@gmail.com
+    Input Text        css:.card__register input[name='name']    Renata Sodré
     Input Password    css:.card__register input[name='password']    eiAbA!#ZYxZ4$U
     Input Password    css:.card__register input[name='passwordConfirmation']    eiAbA!#ZYxZ4$U
 
     Execute JavaScript    arguments[0].value = 'rribeirosodre@gmail.com'    ARGUMENTS    ${input_email}
-    Execute JavaScript    arguments[0].value = 'Renata Sodré'    ARGUMENTS    ${input_nome}
-    Execute JavaScript    arguments[0].value = 'eiAbA!#ZYxZ4$U'    ARGUMENTS    ${input_senha}
-    Execute JavaScript    arguments[0].value = 'eiAbA!#ZYxZ4$U'    ARGUMENTS    ${input_confirmacao_senha}
+    Execute JavaScript    arguments[0].value = 'Renata Sodré'    ARGUMENTS               ${input_nome}
+    Execute JavaScript    arguments[0].value = 'eiAbA!#ZYxZ4$U'    ARGUMENTS             ${input_senha}
+    Execute JavaScript    arguments[0].value = 'eiAbA!#ZYxZ4$U'    ARGUMENTS             ${input_confirmacao_senha}
 
-Clicar no Botão Cadastrar
-    # Estratégias múltiplas para clicar no botão
+Clicar No Botão Cadastrar
+    [Documentation]    Clica no botão de cadastrar
     Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     Sleep    2s
 
@@ -87,7 +91,8 @@ Clicar no Botão Cadastrar
     ...    botao.click();
     ...    }
 
-Clicar no Botão de Saldo
+Clicar No Botão De Saldo
+    [Documentation]    Clica no toggle de saldo para criar conta com saldo
     [Arguments]    ${criar_com_saldo}=${FALSE}
 
     # Espera e verifica o estado do toggle
@@ -103,8 +108,8 @@ Clicar no Botão de Saldo
         Click Element    ${label_saldo}
     END
 
-Voltar ao Login
-    # Estratégia para lidar com elementos que bloqueiam o clique
+Voltar Ao Login
+    [Documentation]    Volta para a página de login
     Execute JavaScript    window.scrollTo(0, 0)
     Sleep    2s
 
@@ -116,5 +121,6 @@ Voltar ao Login
     ...    botao.click();
     ...    }
 
-Fechar site
+Fechar Site
+    [Documentation]    Fecha o navegador
     Close Browser

@@ -1,7 +1,6 @@
 *** Settings ***
 # APOD= Astronomy Picture of the Day
 Library     SeleniumLibrary
-Library     Collections
 
 
 *** Variables ***
@@ -12,15 +11,18 @@ ${API_KEY}      1A0YEWnyo5hf9ffAkaKvUbl6z24dXFgiFgXUNqhg
 
 *** Test Cases ***
 Cenário 1: Validar API NASA
-    Abrir site NASA
-    Validar Resposta do APOD
+    [Documentation]    Testa a API NASA APOD e valida a resposta.
+    Abrir Site NASA
+    Validar Resposta Do APOD
 
 Cenário 2: Fechar Navegador
-    Fechar site
+    [Documentation]    Fecha o navegador após a validação da API.
+    Fechar Site
 
 
 *** Keywords ***
-Configurar Opções do Navegador
+Configurar Opções Do Navegador
+    [Documentation]    Configura as opções do navegador Chrome para o teste.
     # Configura opções do Chrome
     ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
 
@@ -33,14 +35,14 @@ Configurar Opções do Navegador
 
     RETURN    ${options}
 
-Abrir site NASA
-    # Abre o navegador na página de home
-    ${chrome_options}=    Configurar Opções do Navegador
+Abrir Site NASA
+    [Documentation]    Abre o navegador na página de home da NASA APOD.
+    ${chrome_options}=    Configurar Opções Do Navegador
     Open Browser    ${URL}    ${BROWSER}    options=${chrome_options}
     Maximize Browser Window
 
-Validar Resposta do APOD
-    # Testa se o endpoint APOD retorna dados esperados usando urllib
+Validar Resposta Do APOD
+    [Documentation]    Valida a resposta do endpoint APOD da NASA e exibe informações no console - usando urllib.
     ${response}=    Evaluate
     ...    json.loads(urllib.request.urlopen("${URL}").read().decode('utf-8'))
     ...    modules=urllib.request, json
@@ -55,5 +57,6 @@ Validar Resposta do APOD
     Sleep    15s
     RETURN    ${titulo_api}
 
-Fechar site
+Fechar Site
+    [Documentation]    Fecha o navegador.
     Close Browser

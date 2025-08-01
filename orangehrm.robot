@@ -5,32 +5,32 @@ Library     SeleniumLibrary
 *** Variables ***
 ${URL}                  https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
 ${BROWSER}              chrome
-${input_name}           name:username
-${input_apelido}        name:password
-${button_submit}        xpath://button[@type='submit']
-${button_tempo}         css:button.orangehrm-attendance-card-action
-${input_comentario}     css:textarea.oxd-textarea.oxd-textarea--active
-${button_in}            css:button.oxd-button--secondary.orangehrm-left-space
+${INPUT_NAME}           name:username
+${INPUT_APELIDO}        name:password
+${BUTTON_SUBMIT}        xpath://button[@type='submit']
+${BUTTON_TEMPO}         css:button.orangehrm-attendance-card-action
+${INPUT_COMENTARIO}     css:textarea.oxd-textarea.oxd-textarea--active
+${BUTTON_IN}            css:button.oxd-button--secondary.orangehrm-left-space
 
 
 *** Test Cases ***
-Cenário 1: Fazer Login no OrangeHRM
+Cenário 1: Fazer Login No OrangeHRM
     Abrir Navegador
-    Preencher campos
-    Clicar no Botão de Login
+    Preencher Campos
+    Clicar No Botão De Login
 
-Cenário 2: Registar Comentário de Banco de Horas
-    Clicar no Botão de Registar Tempo de Trabalho
-    Adicionar Comentário de Banco de Horas
+Cenário 2: Registrar Comentário De Banco De Horas
+    Clicar No Botão De Registar Tempo De Trabalho
+    Adicionar Comentário De Banco De Horas
     ...    Banco de Horas - Teste de Registro: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
     Submeter Tempo
 
 Cenário 3: Encerrar Sessão
-    Fechar site
+    Fechar Site
 
 
 *** Keywords ***
-Configurar Opções do Navegador
+Configurar Opções Do Navegador
     [Documentation]    Configura opções do Chrome
     ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
 
@@ -44,24 +44,28 @@ Configurar Opções do Navegador
     RETURN    ${options}
 
 Abrir Navegador
-    # Abre o navegador na página de formulário
-    ${chrome_options}    Configurar Opções do Navegador
+    [Documentation]    Abre o navegador na página de login do OrangeHRM.
+    ${chrome_options}    Configurar Opções Do Navegador
     Open Browser    ${URL}    ${BROWSER}    options=${chrome_options}
     Maximize Browser Window
 
-Preencher campos
+Preencher Campos
+    [Documentation]    Preenche os campos de login no OrangeHRM.
     Wait Until Element Is Visible    ${input_name}    10s
-    Input text    ${input_name}    Admin
-    Input text    ${input_apelido}    admin123
+    Input Text    ${input_name}    Admin
+    Input Text    ${input_apelido}    admin123
 
-Clicar no Botão de Login
+Clicar No Botão De Login
+    [Documentation]    Clica no botão de login para acessar o OrangeHRM.
     Click Button    ${button_submit}
 
-Clicar no Botão de Registar Tempo de Trabalho
+Clicar No Botão De Registar Tempo De Trabalho
+    [Documentation]    Clica no botão para registrar o tempo de trabalho.
     Wait Until Page Contains Element    ${button_tempo}    10s
     Click Button    ${button_tempo}
 
-Adicionar Comentário de Banco de Horas
+Adicionar Comentário De Banco De Horas
+    [Documentation]    Adiciona um comentário ao campo de banco de horas.
     [Arguments]    ${comentario}
     Wait Until Element Is Visible    ${input_comentario}    10s
     Execute JavaScript    document.querySelector('textarea.oxd-textarea.oxd-textarea--active').scrollIntoView()
@@ -69,10 +73,12 @@ Adicionar Comentário de Banco de Horas
     Input Text    ${input_comentario}    ${comentario}
 
 Submeter Tempo
+    [Documentation]    Clica no botão para submeter o tempo registrado.
     Wait Until Element Is Visible    ${button_in}    30s
     Execute JavaScript    document.querySelector('button.oxd-button--secondary.orangehrm-left-space').scrollIntoView()
     Sleep    0.5s
     Click Button    ${button_in}
 
-Fechar site
+Fechar Site
+    [Documentation]    Fecha o navegador.
     Close Browser

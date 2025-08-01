@@ -10,12 +10,14 @@ ${BASE_URL}     https://makeup-api.herokuapp.com
 
 *** Test Cases ***
 Cenário 1: Buscar Produtos Da Marca
+    [Documentation]    Busca produtos de uma marca específica e valida a resposta.
     ${marca}=    Set Variable    l'oreal
     ${produtos}=    Buscar Produtos Da Marca    ${marca}
     Log To Console    Produtos encontrados: ${produtos}
     Should Not Be Empty    ${produtos}
 
 Cenário 2: Pesquisar Por Tag
+    [Documentation]    Busca produtos com uma tag específica e valida a existência de produtos filtrados.
     ${produtos}=    Buscar Todos Os Produtos
     ${filtrados}=    Filtrar Produtos Por Tag    ${produtos}    Vegan
     Validar Existencia De Produtos Filtrados    ${filtrados}
@@ -23,6 +25,7 @@ Cenário 2: Pesquisar Por Tag
 
 *** Keywords ***
 Buscar Produtos Da Marca
+    [Documentation]    Busca produtos de uma marca específica.
     [Arguments]    ${marca}
     Create Session    api    ${BASE_URL}
     ${endpoint}=    Set Variable    /api/v1/products.json?brand=${marca}
@@ -32,6 +35,7 @@ Buscar Produtos Da Marca
     RETURN    ${produtos}
 
 Buscar Todos Os Produtos
+    [Documentation]    Busca todos os produtos disponíveis na API.
     Create Session    api    ${BASE_URL}
     ${endpoint}=    Set Variable    /api/v1/products.json
     ${resposta}=    GET On Session    api    ${endpoint}
@@ -40,6 +44,7 @@ Buscar Todos Os Produtos
     RETURN    ${produtos}
 
 Filtrar Produtos Por Tag
+    [Documentation]    Filtra produtos por uma tag específica.
     [Arguments]    ${produtos}    ${tag}
     ${lista_filtrada}=    Create List
     FOR    ${produto}    IN    @{produtos}
@@ -51,6 +56,7 @@ Filtrar Produtos Por Tag
     RETURN    ${lista_filtrada}
 
 Validar Existencia De Produtos Filtrados
+    [Documentation]    Valida se a lista filtrada contém produtos.
     [Arguments]    ${lista_filtrada}
     Should Be True    len(${lista_filtrada}) > 0
     Log Many    @{lista_filtrada}

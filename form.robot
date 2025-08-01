@@ -6,46 +6,42 @@ Library     OperatingSystem
 *** Variables ***
 ${URL}                  https://demoqa.com/automation-practice-form
 ${BROWSER}              chrome
-${input_name}           id:firstName
-${input_apelido}        id:lastName
-${input_email}          id:userEmail
+${INPUT_NAME}           id:firstName
+${INPUT_APELIDO}        id:lastName
+${INPUT_EMAIL}          id:userEmail
 ${GENERO_MASCULINO}     Male
 ${GENERO_FEMININO}      Female
 ${GENERO_OUTRO}         Other
-${input_telemovel}      id:userNumber
-${input_niver}          id:dateOfBirthInput
+${INPUT_TELEMOVEL}      id:userNumber
+${INPUT_NIVER}          id:dateOfBirthInput
 ${LABEL_HOBBIES}        xpath://label[@id='subjects-label' and contains(text(), 'Hobbies')]
 ${CHECKBOX_HOBBIES}     ${LABEL_HOBBIES}/parent::div//input[@type='checkbox']
-${input_foto}           id:uploadPicture
+${INPUT_FOTO}           id:uploadPicture
 ${PROJETO_DIR}          ${EXECDIR}
 ${CAMINHO_FOTO}         ${PROJETO_DIR}${/}Resources${/}logan-weaver-lgnwvr-ezcWbV3Pf_c-unsplash.jpg
-${textarea_endereco}    id:currentAddress
+${TEXTAREA_ENDERECO}    id:currentAddress
 ${DIV_STATE}            xpath://div[contains(text(), 'Select State')]
 ${DIV_CITY}             xpath://div[contains(text(), 'Select City')]
-${button_submit}        id:submit
+${BUTTON_SUBMIT}        id:submit
 
 
 *** Test Cases ***
 Cenário 1: Preencher formulário
-    Abrir navegador
-    Preencher campos
-    # Selecionar gênero
+    [Documentation]    Preenche o formulário de registro
+    Abrir Navegador
+    Preencher Campos
     Selecionar Gênero    ${GENERO_FEMININO}
     Preencher Data Nascimento    # Usa data padrão 15 Mar 1993 ou com data personalizada EX.: 20 Abr 1990
-    # Selecionar hobbies
     Selecionar Hobbies    Reading    Music
-    # Verificar os hobbies selecionados
     Verificar Hobbies Selecionados
-    # Carregar foto com tratamento de erro
-    Carregar foto
-    # Selecionar Estado e Cidade - A lista de cidades só é habiltada, após a seleção do Estado
-    Selecionar Estado e Cidade    Haryana    Panipat
-    Clicar em submit
-    Fechar site
+    Carregar Foto    # Selecionar Estado e Cidade - A lista de cidades só é habiltada, após a seleção do Estado
+    Selecionar Estado E Cidade    Haryana    Panipat
+    Clicar Em Submit
+    Fechar Site
 
 
 *** Keywords ***
-Configurar Opções do Navegador
+Configurar Opções Do Navegador
     [Documentation]    Configura opções do Chrome
     ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
 
@@ -60,18 +56,20 @@ Configurar Opções do Navegador
 
 Abrir Navegador
     [Documentation]    Abre o navegador na página de formulário
-    ${chrome_options}    Configurar Opções do Navegador
+    ${chrome_options}    Configurar Opções Do Navegador
     Open Browser    ${URL}    ${BROWSER}    options=${chrome_options}
     # Maximize Browser Window
 
-Preencher campos
-    Input text    ${input_name}    Renata
-    Input text    ${input_apelido}    Sodré
-    Input text    ${input_email}    rribeirosodre@gmail.com
-    Input text    ${input_telemovel}    999999999
-    Input text    ${textarea_endereco}    Rua Beato Francisco Pacheco 23, Cabrão, Viana do Castelo, 4990-730.
+Preencher Campos
+    [Documentation]    Preenche os campos do formulário de registro
+    Input Text    ${input_name}    Renata
+    Input Text    ${input_apelido}    Sodré
+    Input Text    ${input_email}    rribeirosodre@gmail.com
+    Input Text    ${input_telemovel}    999999999
+    Input Text    ${textarea_endereco}    Rua Beato Francisco Pacheco 23, Cabrão, Viana do Castelo, 4990-730.
 
 Preencher Data Nascimento
+    [Documentation]    Preenche o campo de data de nascimento
     [Arguments]    ${input_niver}=15 Mar 1993
 
     # Limpa o campo antes de inserir
@@ -84,6 +82,7 @@ Preencher Data Nascimento
     Press Keys    id:dateOfBirthInput    ENTER
 
 Selecionar Gênero
+    [Documentation]    Seleciona o gênero no formulário
     [Arguments]    ${genero}
 
     # Estratégias de localização para o site específico
@@ -117,11 +116,13 @@ Selecionar Gênero
     Run Keyword And Ignore Error    Radio Button Should Be Set To    gender    ${genero}
 
 Carregar Foto
+    [Documentation]    Carrega uma foto no campo de upload
     ${CAMINHO_ABSOLUTO}    Normalize Path    ${CAMINHO_FOTO}
     Wait Until Element Is Visible    id=uploadPicture    10s
     Choose File    id=uploadPicture    ${CAMINHO_ABSOLUTO}
 
 Upload Foto Por JavaScript
+    [Documentation]    Carrega uma foto usando JavaScript
     [Arguments]    ${caminho_foto}
 
     Execute JavaScript
@@ -133,7 +134,8 @@ Upload Foto Por JavaScript
     ...    var event = new Event('change', { bubbles: true });
     ...    input.dispatchEvent(event);
 
-Selecionar hobbies
+Selecionar Hobbies
+    [Documentation]    Seleciona os hobbies no formulário
     [Arguments]    @{hobbies}
 
     FOR    ${hobbie}    IN    @{hobbies}
@@ -142,6 +144,7 @@ Selecionar hobbies
     END
 
 Verificar Hobbies Selecionados
+    [Documentation]    Verifica se os hobbies estão selecionados
     [Arguments]    @{hobbies}
 
     FOR    ${hobbie}    IN    @{hobbies}
@@ -156,7 +159,7 @@ Verificar Hobbies Selecionados
     END
 
 Remover Elementos Bloqueadores
-    # Remove anúncios e elementos que podem bloquear interações
+    [Documentation]    Remove anúncios e elementos que podem bloquear interações
     Execute JavaScript
     ...    // Remove iframes de propaganda
     ...    var iframes = document.querySelectorAll('iframe');
@@ -173,7 +176,8 @@ Remover Elementos Bloqueadores
     ...    // Rola para o final da página para carregar elementos
     ...    window.scrollTo(0, document.body.scrollHeight);
 
-Selecionar Estado e Cidade
+Selecionar Estado E Cidade
+    [Documentation]    Seleciona o estado e a cidade no formulário
     [Arguments]    ${estado}    ${cidade}
 
     # Log para debug
@@ -201,8 +205,10 @@ Selecionar Estado e Cidade
     ...    Wait Until Keyword Succeeds    10s    2s
     ...    Click Element    xpath://div[contains(@id, 'react-select') and contains(text(), '${cidade}')]
 
-Clicar em submit
-    Click element    ${button_submit}
+Clicar Em Submit
+    [Documentation]    Clica no botão de submit do formulário
+    Click Element      ${button_submit}
 
-Fechar site
+Fechar Site
+    [Documentation]    Fecha o navegador
     Close Browser
